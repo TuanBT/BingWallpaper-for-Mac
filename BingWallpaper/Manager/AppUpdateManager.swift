@@ -10,8 +10,8 @@ import AppKit
 
 class AppUpdateManager {
     
-    private static let githubLatestReleaseUrl = URL(string: "https://github.com/2h4u/BingWallpaper-for-Mac/releases/latest")!
-    private static let githubExpandedAssetsPrefix = "https://github.com/2h4u/BingWallpaper-for-Mac/releases/expanded_assets/"
+    private static let githubLatestReleaseUrl = URL(string: "https://github.com/TuanBT/BingWallpaper-for-Mac/releases/latest")!
+    private static let githubExpandedAssetsPrefix = "https://github.com/TuanBT/BingWallpaper-for-Mac/releases/expanded_assets/"
     private static let githubDomain = "https://github.com"
     
     static func currentAppVersion() -> String {
