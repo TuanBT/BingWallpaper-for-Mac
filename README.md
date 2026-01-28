@@ -55,6 +55,12 @@
 
  ## Usage
 
+ ### Installation
+ 
+ Download the latest version from the [Releases page](https://github.com/TuanBT/BingWallpaper-for-Mac/releases/latest).
+ 
+ **Important:** Since the app is not code-signed, macOS will show a security warning. See the [Installation Guide](INSTALLATION.md) for detailed instructions on how to install the app.
+
  ### Basic Usage
  1. Install and launch the app
  2. The app will automatically download and set the current Bing wallpaper
