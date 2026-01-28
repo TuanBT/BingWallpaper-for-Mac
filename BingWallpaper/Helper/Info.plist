@@ -4,5 +4,7 @@
 <dict>
 	<key>LSUIElement</key>
 	<true/>
+	<key>NSAppleEventsUsageDescription</key>
+	<string>BingWallpaper needs to access System Events to set wallpaper across all spaces and screens.</string>
 </dict>
 </plist>

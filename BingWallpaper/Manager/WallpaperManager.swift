@@ -40,6 +40,15 @@ class WallpaperManager {
     private func updateWallpaperIfNeeded() {
         guard let descriptor = imageDescriptor else { return }
         let imageUrl = descriptor.image.downloadPath
+        
+        // Try AppleScript first to set wallpaper for all spaces and screens
+        if setWallpaperViaAppleScript(imageUrl: imageUrl) {
+            print("✅ Set wallpaper for all spaces via AppleScript")
+            return
+        }
+        
+        // Fallback to NSWorkspace API (only sets current space)
+        print("⚠️ AppleScript failed, falling back to NSWorkspace API")
         let workspace = NSWorkspace.shared
         
         do {
@@ -47,7 +56,34 @@ class WallpaperManager {
                 try workspace.setDesktopImageURL(imageUrl, for: screen, options: [:])
             }
         } catch {
-            print(error)
+            print("❌ Failed to set wallpaper: \(error)")
         }
+    }
+    
+    private func setWallpaperViaAppleScript(imageUrl: URL) -> Bool {
+        let imagePath = imageUrl.path
+        
+        // AppleScript to set wallpaper for all desktops (spaces) and all screens
+        let script = """
+        tell application "System Events"
+            tell every desktop
+                set picture to "\(imagePath)"
+            end tell
+        end tell
+        """
+        
+        var error: NSDictionary?
+        if let scriptObject = NSAppleScript(source: script) {
+            scriptObject.executeAndReturnError(&error)
+            
+            if let error = error {
+                print("❌ AppleScript error: \(error)")
+                return false
+            }
+            
+            return true
+        }
+        
+        return false
     }
 }
