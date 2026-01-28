@@ -11,6 +11,12 @@ class UpdateManager {
     private let settings = Settings()
     private var timer: Timer?
     
+    deinit {
+        timer?.invalidate()
+        timer = nil
+        NSWorkspace.shared.notificationCenter.removeObserver(self)
+    }
+    
     @MainActor
     func start() {
         setupObserver()

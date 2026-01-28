@@ -33,8 +33,15 @@ class SettingsVc: NSViewController {
         hideMenuBarIconCheckBox.state = settings.hideMenuBarIcon ? .on : .off
         imagePathButton.title = settings.imageDownloadPath.path
         imagePathButton.toolTip = imagePathButton.title
+        
+        // Configure slider for 5 options: 1, 2, 5, 10, ∞
+        keepImagesSlider.minValue = 0
+        keepImagesSlider.maxValue = 4
+        keepImagesSlider.numberOfTickMarks = 5
+        keepImagesSlider.allowsTickMarkValuesOnly = true
         keepImagesSlider.integerValue = settings.keepImageDuration
         setKeepImagesText()
+        
         updateIntervalTextField.doubleValue = settings.updateIntervalHours
         setUpdateIntervalText()
         setupMarketRegionPopup()
@@ -117,7 +124,7 @@ class SettingsVc: NSViewController {
     @IBAction func resetDatabaseButtonAction(_ sender: NSButton) {
         print("Resetting Database...")
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYYMMdd"
+        dateFormatter.dateFormat = "yyyyMMdd"  // Use yyyy (calendar year), not YYYY (week year)
         let oldestDateStringToKeep = dateFormatter.string(from: Date())
         
         do {
@@ -142,8 +149,9 @@ class SettingsVc: NSViewController {
         guard let keepImageDuration = KeepImageDuration(rawValue: settings.keepImageDuration) else { return }
         
         switch keepImageDuration {
-        case .five, .ten, .fifty, .onehundred:
-            keepImagesTextField.stringValue = "Keep last \(keepImageDuration.text) images:"
+        case .one, .two, .five, .ten:
+            let dayText = keepImageDuration.text == "1" ? "day" : "days"
+            keepImagesTextField.stringValue = "Keep images from last \(keepImageDuration.text) \(dayText):"
         case .infinite:
             keepImagesTextField.stringValue = "Keep all images forever:"
         }
@@ -275,22 +283,22 @@ class SettingsVc: NSViewController {
 }
 
 enum KeepImageDuration: Int {
+    case one
+    case two
     case five
     case ten
-    case fifty
-    case onehundred
     case infinite
     
     var text: String {
         switch self {
+        case .one:
+            return "1"
+        case .two:
+            return "2"
         case .five:
             return "5"
         case .ten:
             return "10"
-        case .fifty:
-            return "50"
-        case .onehundred:
-            return "100"
         case .infinite:
             return "∞"
         }

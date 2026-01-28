@@ -29,6 +29,7 @@
 		2CEB95EF2869A34D00C75D8B /* TextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CEB95EE2869A34D00C75D8B /* TextView.xib */; };
 		2CEB95F12869A36400C75D8B /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CEB95F02869A36400C75D8B /* TextView.swift */; };
 		2CEDEC402860D9E10096B707 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CEDEC3F2860D9E10096B707 /* DownloadManager.swift */; };
+		A1B2C3D4E5F60002 /* MarketRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60001 /* MarketRegion.swift */; };
 		E534128D291810DB00F91EE0 /* UpdateScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E534128C291810DB00F91EE0 /* UpdateScheduleManager.swift */; };
 		E56BD7672BAF697B0013F1A2 /* ImageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56BD7662BAF697B0013F1A2 /* ImageError.swift */; };
 		E56BD7692BAF735C0013F1A2 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56BD7682BAF735C0013F1A2 /* Image.swift */; };
@@ -91,6 +92,7 @@
 		2CEB95F02869A36400C75D8B /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		2CEDEC3F2860D9E10096B707 /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
 		9AF86FA1319AE46B42748077 /* Pods_BingWallpaper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BingWallpaper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1B2C3D4E5F60001 /* MarketRegion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketRegion.swift; sourceTree = "<group>"; };
 		E534128C291810DB00F91EE0 /* UpdateScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateScheduleManager.swift; sourceTree = "<group>"; };
 		E56BD7662BAF697B0013F1A2 /* ImageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageError.swift; sourceTree = "<group>"; };
 		E56BD7682BAF735C0013F1A2 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				2C4D65BF2864C3AB00878CED /* CollectionExtensions.swift */,
 				E5DB8FE42945E76800AF557A /* StringExtensions.swift */,
 				E56BD7662BAF697B0013F1A2 /* ImageError.swift */,
+				A1B2C3D4E5F60001 /* MarketRegion.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -418,6 +421,7 @@
 				E534128D291810DB00F91EE0 /* UpdateScheduleManager.swift in Sources */,
 				2C4D65C02864C3AB00878CED /* CollectionExtensions.swift in Sources */,
 				E56BD7672BAF697B0013F1A2 /* ImageError.swift in Sources */,
+				A1B2C3D4E5F60002 /* MarketRegion.swift in Sources */,
 				2CEB95F12869A36400C75D8B /* TextView.swift in Sources */,
 				2CA439D1286189260015AE45 /* FileHandler.swift in Sources */,
 				E5DB8FE32945D97800AF557A /* AppUpdateManager.swift in Sources */,
@@ -680,7 +684,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.6.0;
+				MARKETING_VERSION = 0.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.2h4u.BingWallpaper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -716,7 +720,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.6.0;
+				MARKETING_VERSION = 0.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.2h4u.BingWallpaper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

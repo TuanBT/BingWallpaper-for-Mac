@@ -708,7 +708,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="604" height="371"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jLa-xO-k3i">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jLa-xO-k3i">
                                 <rect key="frame" x="101" y="136" width="97" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Image location:" id="NQl-wS-gWX">
                                     <font key="font" metaFont="system"/>
@@ -726,13 +726,7 @@
                                     <action selector="keepImagesSliderAction:" target="use-oq-evN" id="Bif-dr-udv"/>
                                 </connections>
                             </slider>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="ceD-8P-4G2">
-                                <rect key="frame" x="200" y="2" width="0.0" height="272"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" id="FKE-IA-RmJ"/>
-                                </constraints>
-                            </customView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Nc2-2h-cGg">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Nc2-2h-cGg">
                                 <rect key="frame" x="62" y="96" width="136" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Keep images on disk: " id="7Kf-YJ-H1X">
                                     <font key="font" metaFont="system"/>
@@ -740,41 +734,41 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XiP-bd-Y91">
-                                <rect key="frame" x="200" y="72" width="12" height="16"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="5" id="DLK-Ds-IfV">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XiP-bd-Y91">
+                                <rect key="frame" x="209" y="72" width="10" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="1" id="DLK-Ds-IfV">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VG3-87-tVb">
-                                <rect key="frame" x="256" y="72" width="19" height="16"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="10" id="LZM-kE-PlV">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VG3-87-tVb">
+                                <rect key="frame" x="260" y="72" width="12" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="2" id="LZM-kE-PlV">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pwY-eA-MkC">
-                                <rect key="frame" x="411" y="72" width="46" height="16"/>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pwY-eA-MkC">
+                                <rect key="frame" x="409" y="72" width="46" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Infinite" id="yVt-UM-yYc">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KT3-8h-g8a">
-                                <rect key="frame" x="364" y="72" width="27" height="16"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="100" id="Kw7-mN-rKa">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KT3-8h-g8a">
+                                <rect key="frame" x="362" y="72" width="19" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="10" id="Kw7-mN-rKa">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2AZ-nG-cF5">
-                                <rect key="frame" x="311" y="72" width="21" height="16"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="50" id="fng-Fo-ezz">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2AZ-nG-cF5">
+                                <rect key="frame" x="313" y="72" width="12" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="5" id="fng-Fo-ezz">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -803,7 +797,7 @@
                                     <action selector="resetDatabaseButtonAction:" target="use-oq-evN" id="1Sb-Gg-GE2"/>
                                 </connections>
                             </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="upd-iv-txt">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="upd-iv-txt">
                                 <rect key="frame" x="50" y="222" width="148" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Update interval (hours):" id="upd-iv-cel">
                                     <font key="font" metaFont="system"/>
@@ -811,7 +805,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="upd-iv-fld">
+                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="upd-iv-fld">
                                 <rect key="frame" x="204" y="218" width="80" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="upd-iv-wid"/>
@@ -826,7 +820,7 @@
                                     <action selector="updateIntervalTextFieldAction:" target="use-oq-evN" id="upd-iv-act"/>
                                 </connections>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="upd-iv-lbl">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="upd-iv-lbl">
                                 <rect key="frame" x="290" y="222" width="197" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Update wallpaper every 3 hours" id="upd-iv-lbl-cel">
                                     <font key="font" metaFont="system"/>
@@ -834,7 +828,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mkt-rgn-txt">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mkt-rgn-txt">
                                 <rect key="frame" x="103" y="266" width="95" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Market Region:" id="mkt-rgn-cel">
                                     <font key="font" metaFont="system"/>
@@ -860,63 +854,6 @@
                                     <action selector="marketRegionPopupAction:" target="use-oq-evN" id="mkt-rgn-act"/>
                                 </connections>
                             </popUpButton>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sch-upd-chk">
-                                <rect key="frame" x="64" y="180" width="163" height="16"/>
-                                <buttonCell key="cell" type="check" title="Update at specific time" bezelStyle="regularSquare" imagePosition="left" inset="2" id="sch-upd-chk-cel">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <color key="bezelColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <connections>
-                                    <action selector="scheduledUpdateCheckBoxAction:" target="use-oq-evN" id="sch-upd-act"/>
-                                </connections>
-                            </button>
-                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sch-hr-fld">
-                                <rect key="frame" x="239" y="176" width="40" height="24"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="40" id="sch-hr-wid"/>
-                                </constraints>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="0" drawsBackground="YES" id="sch-hr-fld-cel">
-                                    <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2" id="sch-hr-fmt"/>
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                                <connections>
-                                    <action selector="scheduledHourTextFieldAction:" target="use-oq-evN" id="sch-hr-act"/>
-                                </connections>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sch-sep-lbl">
-                                <rect key="frame" x="282" y="180" width="9" height="17"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title=":" id="sch-sep-lbl-cel">
-                                    <font key="font" metaFont="systemBold" size="14"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sch-min-fld">
-                                <rect key="frame" x="294" y="176" width="40" height="24"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="40" id="sch-min-wid"/>
-                                </constraints>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="0" drawsBackground="YES" id="sch-min-fld-cel">
-                                    <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2" id="sch-min-fmt"/>
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                                <connections>
-                                    <action selector="scheduledMinuteTextFieldAction:" target="use-oq-evN" id="sch-min-act"/>
-                                </connections>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sch-time-lbl">
-                                <rect key="frame" x="340" y="180" width="136" height="16"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Update daily at 00:00" id="sch-time-lbl-cel">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BwE-uB-V9Y">
                                 <rect key="frame" x="141" y="314" width="115" height="16"/>
                                 <buttonCell key="cell" type="check" title="Launch at login" bezelStyle="regularSquare" imagePosition="left" inset="2" id="hyy-Bv-s93">
@@ -939,38 +876,101 @@
                                     <action selector="hideMenuBarIconCheckBoxAction:" target="use-oq-evN" id="a5T-PE-PM3"/>
                                 </connections>
                             </button>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="ceD-8P-4G2">
+                                <rect key="frame" x="165" y="2" width="0.0" height="272"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" id="FKE-IA-RmJ"/>
+                                </constraints>
+                            </customView>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sch-upd-chk">
+                                <rect key="frame" x="29" y="180" width="163" height="16"/>
+                                <buttonCell key="cell" type="check" title="Update at specific time" bezelStyle="regularSquare" imagePosition="left" inset="2" id="sch-upd-chk-cel">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <color key="bezelColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <connections>
+                                    <action selector="scheduledUpdateCheckBoxAction:" target="use-oq-evN" id="sch-upd-act"/>
+                                </connections>
+                            </button>
+                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sch-hr-fld">
+                                <rect key="frame" x="204" y="176" width="40" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="sch-hr-wid"/>
+                                </constraints>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="0" drawsBackground="YES" id="sch-hr-fld-cel">
+                                    <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2" id="sch-hr-fmt"/>
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <action selector="scheduledHourTextFieldAction:" target="use-oq-evN" id="sch-hr-act"/>
+                                </connections>
+                            </textField>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sch-sep-lbl">
+                                <rect key="frame" x="247" y="180" width="9" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title=":" id="sch-sep-lbl-cel">
+                                    <font key="font" metaFont="systemBold" size="14"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sch-min-fld">
+                                <rect key="frame" x="259" y="176" width="40" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="sch-min-wid"/>
+                                </constraints>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="0" drawsBackground="YES" id="sch-min-fld-cel">
+                                    <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2" id="sch-min-fmt"/>
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <action selector="scheduledMinuteTextFieldAction:" target="use-oq-evN" id="sch-min-act"/>
+                                </connections>
+                            </textField>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sch-time-lbl">
+                                <rect key="frame" x="305" y="180" width="136" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Update daily at 00:00" id="sch-time-lbl-cel">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="z5t-h5-pAw" firstAttribute="leading" secondItem="ceD-8P-4G2" secondAttribute="trailing" constant="79" id="1fg-uY-f72"/>
-                            <constraint firstItem="ceD-8P-4G2" firstAttribute="leading" secondItem="Nc2-2h-cGg" secondAttribute="trailing" constant="4" id="2WZ-yX-qhM"/>
+                            <constraint firstItem="z5t-h5-pAw" firstAttribute="leading" secondItem="ceD-8P-4G2" secondAttribute="trailing" constant="114" id="1fg-uY-f72"/>
+                            <constraint firstItem="ceD-8P-4G2" firstAttribute="leading" secondItem="Nc2-2h-cGg" secondAttribute="trailing" constant="-31" id="2WZ-yX-qhM"/>
                             <constraint firstItem="pwY-eA-MkC" firstAttribute="top" secondItem="g2b-2B-Pe0" secondAttribute="bottom" constant="8" symbolic="YES" id="43t-hh-fMm"/>
                             <constraint firstItem="XiP-bd-Y91" firstAttribute="top" secondItem="g2b-2B-Pe0" secondAttribute="bottom" constant="8" symbolic="YES" id="5Ms-Xw-zTT"/>
                             <constraint firstItem="g2b-2B-Pe0" firstAttribute="top" secondItem="oVI-hQ-pSs" secondAttribute="bottom" constant="20" symbolic="YES" id="7E8-Vy-NrZ"/>
                             <constraint firstItem="BwE-uB-V9Y" firstAttribute="top" secondItem="mkt-rgn-pop" secondAttribute="bottom" constant="-68" id="7IT-jU-Uqz"/>
                             <constraint firstAttribute="bottom" secondItem="ceD-8P-4G2" secondAttribute="bottom" constant="2" id="BUi-Nj-mQK"/>
                             <constraint firstItem="oVI-hQ-pSs" firstAttribute="centerY" secondItem="jLa-xO-k3i" secondAttribute="centerY" id="CBK-MC-mBY"/>
-                            <constraint firstItem="2AZ-nG-cF5" firstAttribute="leading" secondItem="VG3-87-tVb" secondAttribute="trailing" constant="40" id="Dvq-zO-HwR"/>
+                            <constraint firstItem="2AZ-nG-cF5" firstAttribute="leading" secondItem="VG3-87-tVb" secondAttribute="trailing" constant="45" id="Dvq-zO-HwR"/>
                             <constraint firstItem="UF4-pS-ciZ" firstAttribute="centerX" secondItem="FR1-81-dt4" secondAttribute="centerX" id="OWR-9u-rVC"/>
-                            <constraint firstItem="g2b-2B-Pe0" firstAttribute="leading" secondItem="ceD-8P-4G2" secondAttribute="trailing" constant="4" id="OeN-6w-sPs"/>
+                            <constraint firstItem="g2b-2B-Pe0" firstAttribute="leading" secondItem="ceD-8P-4G2" secondAttribute="trailing" constant="39" id="OeN-6w-sPs"/>
                             <constraint firstItem="KT3-8h-g8a" firstAttribute="top" secondItem="g2b-2B-Pe0" secondAttribute="bottom" constant="8" symbolic="YES" id="PKg-Ap-u3I"/>
-                            <constraint firstItem="KT3-8h-g8a" firstAttribute="leading" secondItem="2AZ-nG-cF5" secondAttribute="trailing" constant="36" id="XGW-rl-rqr"/>
-                            <constraint firstItem="XiP-bd-Y91" firstAttribute="leading" secondItem="ceD-8P-4G2" secondAttribute="trailing" constant="2" id="YC0-vG-VHv"/>
+                            <constraint firstItem="KT3-8h-g8a" firstAttribute="leading" secondItem="2AZ-nG-cF5" secondAttribute="trailing" constant="41" id="XGW-rl-rqr"/>
+                            <constraint firstItem="XiP-bd-Y91" firstAttribute="leading" secondItem="ceD-8P-4G2" secondAttribute="trailing" constant="46" id="YC0-vG-VHv"/>
                             <constraint firstItem="VG3-87-tVb" firstAttribute="top" secondItem="g2b-2B-Pe0" secondAttribute="bottom" constant="8" symbolic="YES" id="bXd-Bg-atS"/>
                             <constraint firstAttribute="bottom" secondItem="UF4-pS-ciZ" secondAttribute="bottom" constant="32" id="ckj-ig-an0"/>
                             <constraint firstAttribute="trailing" secondItem="oVI-hQ-pSs" secondAttribute="trailing" constant="100" id="dYg-md-YcW"/>
-                            <constraint firstItem="BwE-uB-V9Y" firstAttribute="leading" secondItem="ceD-8P-4G2" secondAttribute="trailing" constant="-59" id="dh9-fZ-kEV"/>
+                            <constraint firstItem="BwE-uB-V9Y" firstAttribute="leading" secondItem="ceD-8P-4G2" secondAttribute="trailing" constant="-24" id="dh9-fZ-kEV"/>
                             <constraint firstItem="UF4-pS-ciZ" firstAttribute="top" secondItem="2AZ-nG-cF5" secondAttribute="bottom" constant="16" id="dsh-B5-amh"/>
-                            <constraint firstItem="ceD-8P-4G2" firstAttribute="leading" secondItem="FR1-81-dt4" secondAttribute="leading" constant="200" id="eXB-GA-dBh"/>
+                            <constraint firstItem="ceD-8P-4G2" firstAttribute="leading" secondItem="FR1-81-dt4" secondAttribute="leading" constant="165" id="eXB-GA-dBh"/>
                             <constraint firstItem="2AZ-nG-cF5" firstAttribute="top" secondItem="g2b-2B-Pe0" secondAttribute="bottom" constant="8" symbolic="YES" id="gVP-n8-UEc"/>
-                            <constraint firstItem="oVI-hQ-pSs" firstAttribute="leading" secondItem="ceD-8P-4G2" secondAttribute="trailing" constant="4" id="gt9-tE-FDg"/>
+                            <constraint firstItem="oVI-hQ-pSs" firstAttribute="leading" secondItem="ceD-8P-4G2" secondAttribute="trailing" constant="39" id="gt9-tE-FDg"/>
                             <constraint firstItem="z5t-h5-pAw" firstAttribute="top" secondItem="BwE-uB-V9Y" secondAttribute="bottom" constant="-16" id="mUh-tU-RP4"/>
                             <constraint firstItem="ceD-8P-4G2" firstAttribute="top" secondItem="FR1-81-dt4" secondAttribute="top" constant="97" id="mVM-EL-vMz"/>
                             <constraint firstItem="mkt-rgn-txt" firstAttribute="centerY" secondItem="mkt-rgn-pop" secondAttribute="centerY" id="mkt-rgn-ctr"/>
-                            <constraint firstItem="mkt-rgn-pop" firstAttribute="leading" secondItem="ceD-8P-4G2" secondAttribute="trailing" constant="4" id="mkt-rgn-ld1"/>
+                            <constraint firstItem="mkt-rgn-pop" firstAttribute="leading" secondItem="ceD-8P-4G2" secondAttribute="trailing" constant="39" id="mkt-rgn-ld1"/>
                             <constraint firstItem="mkt-rgn-pop" firstAttribute="top" secondItem="FR1-81-dt4" secondAttribute="top" constant="85" id="mkt-rgn-top"/>
                             <constraint firstItem="mkt-rgn-txt" firstAttribute="trailing" secondItem="Nc2-2h-cGg" secondAttribute="trailing" id="mkt-rgn-tr1"/>
-                            <constraint firstItem="pwY-eA-MkC" firstAttribute="leading" secondItem="KT3-8h-g8a" secondAttribute="trailing" constant="24" id="nDD-m2-p1A"/>
-                            <constraint firstItem="sch-upd-chk" firstAttribute="leading" secondItem="FR1-81-dt4" secondAttribute="leading" constant="64" id="sch-chk-ld"/>
+                            <constraint firstItem="pwY-eA-MkC" firstAttribute="leading" secondItem="KT3-8h-g8a" secondAttribute="trailing" constant="32" id="nDD-m2-p1A"/>
+                            <constraint firstItem="sch-upd-chk" firstAttribute="leading" secondItem="FR1-81-dt4" secondAttribute="leading" constant="29" id="sch-chk-ld"/>
                             <constraint firstItem="sch-upd-chk" firstAttribute="top" secondItem="upd-iv-fld" secondAttribute="bottom" constant="22" id="sch-chk-top"/>
                             <constraint firstItem="sch-hr-fld" firstAttribute="centerY" secondItem="sch-upd-chk" secondAttribute="centerY" id="sch-hr-ctr"/>
                             <constraint firstItem="sch-hr-fld" firstAttribute="leading" secondItem="sch-upd-chk" secondAttribute="trailing" constant="12" id="sch-hr-ld"/>
@@ -980,15 +980,15 @@
                             <constraint firstItem="sch-min-fld" firstAttribute="leading" secondItem="sch-sep-lbl" secondAttribute="trailing" constant="5" id="sch-min-ld"/>
                             <constraint firstItem="sch-sep-lbl" firstAttribute="centerY" secondItem="sch-hr-fld" secondAttribute="centerY" id="sch-sep-ctr"/>
                             <constraint firstItem="sch-sep-lbl" firstAttribute="leading" secondItem="sch-hr-fld" secondAttribute="trailing" constant="5" id="sch-sep-ld"/>
-                            <constraint firstItem="VG3-87-tVb" firstAttribute="leading" secondItem="XiP-bd-Y91" secondAttribute="trailing" constant="48" id="tdh-Y2-R4T"/>
+                            <constraint firstItem="VG3-87-tVb" firstAttribute="leading" secondItem="XiP-bd-Y91" secondAttribute="trailing" constant="45" id="tdh-Y2-R4T"/>
                             <constraint firstItem="oVI-hQ-pSs" firstAttribute="top" secondItem="z5t-h5-pAw" secondAttribute="bottom" constant="158" id="tsZ-WM-zuL"/>
                             <constraint firstItem="upd-iv-txt" firstAttribute="centerY" secondItem="upd-iv-fld" secondAttribute="centerY" id="upd-iv-ctr"/>
                             <constraint firstItem="upd-iv-lbl" firstAttribute="centerY" secondItem="upd-iv-fld" secondAttribute="centerY" id="upd-iv-ctr2"/>
-                            <constraint firstItem="upd-iv-fld" firstAttribute="leading" secondItem="ceD-8P-4G2" secondAttribute="trailing" constant="4" id="upd-iv-ld1"/>
+                            <constraint firstItem="upd-iv-fld" firstAttribute="leading" secondItem="ceD-8P-4G2" secondAttribute="trailing" constant="39" id="upd-iv-ld1"/>
                             <constraint firstItem="upd-iv-lbl" firstAttribute="leading" secondItem="upd-iv-fld" secondAttribute="trailing" constant="8" id="upd-iv-ld2"/>
                             <constraint firstItem="upd-iv-fld" firstAttribute="top" secondItem="mkt-rgn-pop" secondAttribute="bottom" constant="20" id="upd-iv-top"/>
                             <constraint firstItem="upd-iv-txt" firstAttribute="trailing" secondItem="Nc2-2h-cGg" secondAttribute="trailing" id="upd-iv-tr1"/>
-                            <constraint firstItem="ceD-8P-4G2" firstAttribute="leading" secondItem="jLa-xO-k3i" secondAttribute="trailing" constant="4" id="vKc-sU-ZYf"/>
+                            <constraint firstItem="ceD-8P-4G2" firstAttribute="leading" secondItem="jLa-xO-k3i" secondAttribute="trailing" constant="-31" id="vKc-sU-ZYf"/>
                             <constraint firstItem="Nc2-2h-cGg" firstAttribute="centerY" secondItem="g2b-2B-Pe0" secondAttribute="centerY" id="zli-ap-qx5"/>
                         </constraints>
                     </view>

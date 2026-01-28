@@ -3,15 +3,66 @@ import ServiceManagement
 
 public class Settings {
     private let defaults = UserDefaults.standard
+    private static let helperBundleId = "com.2h4u.BingWallpaperHelper"
+    private static let SETTINGS_VERSION = "SETTINGS_VERSION"
+    private static let CURRENT_SETTINGS_VERSION = 2  // Increment when breaking changes occur
     
-    public init() { }
+    public init() {
+        migrateSettingsIfNeeded()
+    }
+    
+    /// Migrate settings from older versions
+    private func migrateSettingsIfNeeded() {
+        let version = defaults.integer(forKey: Settings.SETTINGS_VERSION)
+        
+        if version < 2 {
+            // Version 2: Changed KeepImageDuration from [5,10,50,100,∞] to [1,2,5,10,∞]
+            // Old values: 0=5, 1=10, 2=50, 3=100, 4=∞
+            // New values: 0=1, 1=2, 2=5, 3=10, 4=∞
+            // Map old to new: 0->2 (5 days), 1->3 (10 days), 2->2 (closest), 3->3 (closest), 4->4 (∞)
+            if defaults.object(forKey: Settings.KEEP_IMAGE_DURATION) != nil {
+                let oldValue = defaults.integer(forKey: Settings.KEEP_IMAGE_DURATION)
+                let newValue: Int
+                switch oldValue {
+                case 0: newValue = 2  // 5 images -> 5 days
+                case 1: newValue = 3  // 10 images -> 10 days
+                case 2: newValue = 2  // 50 images -> 5 days (closest)
+                case 3: newValue = 3  // 100 images -> 10 days (closest)
+                case 4: newValue = 4  // infinite -> infinite
+                default: newValue = 2 // default to 5 days
+                }
+                defaults.set(newValue, forKey: Settings.KEEP_IMAGE_DURATION)
+            }
+        }
+        
+        defaults.set(Settings.CURRENT_SETTINGS_VERSION, forKey: Settings.SETTINGS_VERSION)
+    }
     
     var launchAtLogin: Bool {
         get {
-            return defaults.bool(forKey: Settings.SM_LOGIN_ENABLED)
+            // For macOS 13+, check SMAppService status
+            if #available(macOS 13.0, *) {
+                let service = SMAppService.loginItem(identifier: Settings.helperBundleId)
+                return service.status == .enabled
+            } else {
+                return defaults.bool(forKey: Settings.SM_LOGIN_ENABLED)
+            }
         }
         set {
-            SMLoginItemSetEnabled("com.2h4u.BingWallpaperHelper" as CFString, newValue)
+            if #available(macOS 13.0, *) {
+                let service = SMAppService.loginItem(identifier: Settings.helperBundleId)
+                do {
+                    if newValue {
+                        try service.register()
+                    } else {
+                        try service.unregister()
+                    }
+                } catch {
+                    print("Failed to \(newValue ? "register" : "unregister") login item: \(error)")
+                }
+            } else {
+                SMLoginItemSetEnabled(Settings.helperBundleId as CFString, newValue)
+            }
             defaults.set(newValue, forKey: Settings.SM_LOGIN_ENABLED)
         }
     }
@@ -45,7 +96,7 @@ public class Settings {
     
     var keepImageDuration: Int {
         get {
-            return defaults.object(forKey: Settings.KEEP_IMAGE_DURATION) as? Int ?? KeepImageDuration.fifty.rawValue
+            return defaults.object(forKey: Settings.KEEP_IMAGE_DURATION) as? Int ?? KeepImageDuration.five.rawValue
         }
         set {
             defaults.set(newValue, forKey: Settings.KEEP_IMAGE_DURATION)
@@ -101,18 +152,18 @@ public class Settings {
         let durationInDays: Double?
         
         switch keepImageDuration {
+        case KeepImageDuration.one.rawValue:
+            durationInDays = 1
+        case KeepImageDuration.two.rawValue:
+            durationInDays = 2
         case KeepImageDuration.five.rawValue:
             durationInDays = 5
         case KeepImageDuration.ten.rawValue:
             durationInDays = 10
-        case KeepImageDuration.fifty.rawValue:
-            durationInDays = 50
-        case KeepImageDuration.onehundred.rawValue:
-            durationInDays = 100
         case KeepImageDuration.infinite.rawValue:
             durationInDays = nil
         default:
-            durationInDays = 50
+            durationInDays = 5 // Default to 5 days
         }
         
         guard let durationInDays = durationInDays else {

@@ -10,13 +10,19 @@
 
  ### 🖼️ Automatic Wallpaper Updates
  - Automatically downloads and applies the daily Bing wallpaper
- - Works across all monitors and spaces
+ - Works across all monitors and spaces (uses AppleScript for reliable multi-space support)
  - Runs silently in the background from your menubar
 
  ### 🌍 Market Region Selection
  - Choose from 50+ countries/regions to get localized Bing wallpapers
  - Supported regions include: US, UK, Germany, France, Japan, China, Vietnam, and many more
  - Different regions may feature different daily images
+
+ ### 🔍 Browse Other Regions (NEW!)
+ - Preview wallpapers from any region without changing your settings
+ - Quickly explore what other countries have for their daily Bing image
+ - Popular regions are highlighted for easy access
+ - Perfect for finding unique wallpapers from around the world
 
  ### ⏰ Flexible Update Scheduling
  Two update modes available:
@@ -32,13 +38,14 @@
 
  ### 💾 Image Management
  - Choose custom download location for wallpaper images
- - Configure how many images to keep on disk (5, 10, 50, 100, or unlimited)
+ - Configure how many days of images to keep on disk (1, 2, 5, 10 days, or unlimited)
  - Automatic cleanup of old images
 
  ### 🎛️ System Integration
  - Launch at login option
  - Hide menubar icon option (access settings via right-click or keyboard shortcut)
  - Reset database functionality
+ - Check for app updates directly from GitHub releases
 
  ## Settings
 
@@ -50,7 +57,7 @@
  | **Update interval** | How often to check for new wallpapers (hours) |
  | **Update at specific time** | Enable scheduled daily updates at a specific time |
  | **Image location** | Where to save downloaded wallpaper images |
- | **Keep images on disk** | How many images to retain (5/10/50/100/∞) |
+ | **Keep images on disk** | How many days of images to retain (1/2/5/10/∞) |
  | **Reset Database** | Clear the image database and re-download |
 
  ## Usage
@@ -65,6 +72,14 @@
  1. Install and launch the app
  2. The app will automatically download and set the current Bing wallpaper
  3. Access the menu by clicking the menubar icon
+
+ ### Browsing Other Regions
+ To preview wallpapers from other countries:
+ 1. Click the menubar icon
+ 2. Hover over "Browse Other Regions"
+ 3. Select a region from the list (popular regions shown first)
+ 4. The preview will load and display in the menu
+ 5. Use "Back to My Region" to return to your configured region
 
  ### Setting Up Midnight Updates
  To update wallpapers at midnight each day:
@@ -82,8 +97,9 @@
 
  ## Requirements
 
- - macOS 10.15 (Catalina) or later
+ - macOS 11.0 (Big Sur) or later
  - Internet connection for downloading wallpapers
+ - System Events permission (for setting wallpaper across all Spaces)
 
  ## License
 
