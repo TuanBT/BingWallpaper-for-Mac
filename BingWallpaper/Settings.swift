@@ -148,6 +148,37 @@ public class Settings {
         }
     }
     
+    /// Automatically set the newest wallpaper after scheduled update
+    var autoSetNewestWallpaper: Bool {
+        get {
+            // Default to true for better UX
+            return defaults.object(forKey: Settings.AUTO_SET_NEWEST_WALLPAPER) as? Bool ?? true
+        }
+        set {
+            defaults.set(newValue, forKey: Settings.AUTO_SET_NEWEST_WALLPAPER)
+        }
+    }
+    
+    /// Show notification when wallpaper is updated
+    var showUpdateNotification: Bool {
+        get {
+            return defaults.object(forKey: Settings.SHOW_UPDATE_NOTIFICATION) as? Bool ?? false
+        }
+        set {
+            defaults.set(newValue, forKey: Settings.SHOW_UPDATE_NOTIFICATION)
+        }
+    }
+    
+    /// Currently selected wallpaper (to restore after restart)
+    var currentWallpaperStartDate: String? {
+        get {
+            return defaults.string(forKey: Settings.CURRENT_WALLPAPER_START_DATE)
+        }
+        set {
+            defaults.set(newValue, forKey: Settings.CURRENT_WALLPAPER_START_DATE)
+        }
+    }
+    
     private func keepImageTimeInterval() -> TimeInterval? {
         let durationInDays: Double?
         
@@ -200,4 +231,7 @@ public class Settings {
     private static let USE_SCHEDULED_UPDATE = "USE_SCHEDULED_UPDATE"
     private static let SCHEDULED_UPDATE_HOUR = "SCHEDULED_UPDATE_HOUR"
     private static let SCHEDULED_UPDATE_MINUTE = "SCHEDULED_UPDATE_MINUTE"
+    private static let AUTO_SET_NEWEST_WALLPAPER = "AUTO_SET_NEWEST_WALLPAPER"
+    private static let SHOW_UPDATE_NOTIFICATION = "SHOW_UPDATE_NOTIFICATION"
+    private static let CURRENT_WALLPAPER_START_DATE = "CURRENT_WALLPAPER_START_DATE"
 }

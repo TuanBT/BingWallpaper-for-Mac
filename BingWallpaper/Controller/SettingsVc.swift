@@ -20,6 +20,8 @@ class SettingsVc: NSViewController {
     @IBOutlet weak var scheduledHourTextField: NSTextField!
     @IBOutlet weak var scheduledMinuteTextField: NSTextField!
     @IBOutlet weak var scheduledTimeLabel: NSTextField!
+    @IBOutlet weak var autoSetWallpaperCheckBox: NSButton!
+    @IBOutlet weak var showNotificationCheckBox: NSButton!
     
     private let settings = Settings()
     weak var delegate: SettingsVcDelegate?
@@ -46,6 +48,19 @@ class SettingsVc: NSViewController {
         setUpdateIntervalText()
         setupMarketRegionPopup()
         setupScheduledUpdate()
+        setupAdvancedOptions()
+    }
+    
+    private func setupAdvancedOptions() {
+        // Setup auto-set wallpaper checkbox if available
+        if let autoSetCheckBox = autoSetWallpaperCheckBox {
+            autoSetCheckBox.state = settings.autoSetNewestWallpaper ? .on : .off
+        }
+        
+        // Setup notification checkbox if available
+        if let notifCheckBox = showNotificationCheckBox {
+            notifCheckBox.state = settings.showUpdateNotification ? .on : .off
+        }
     }
     
     // MARK: - Actions
@@ -119,6 +134,14 @@ class SettingsVc: NSViewController {
         scheduledMinuteTextField.integerValue = minute
         setScheduledTimeLabel()
         updateManager?.reschedule()
+    }
+    
+    @IBAction func autoSetWallpaperCheckBoxAction(_ sender: NSButton) {
+        settings.autoSetNewestWallpaper = sender.state == .on
+    }
+    
+    @IBAction func showNotificationCheckBoxAction(_ sender: NSButton) {
+        settings.showUpdateNotification = sender.state == .on
     }
     
     @IBAction func resetDatabaseButtonAction(_ sender: NSButton) {

@@ -89,14 +89,12 @@ class AppUpdateManager {
     
     @MainActor
     private static func showAlreadyUpToDateDialog() {
+        let currentVersion = currentAppVersion().replacingOccurrences(of: "v", with: "")
         let alert = NSAlert()
-        alert.messageText = "BingWallpaper already up to date"
-        alert.informativeText = "There is no new version of BingWallpaper available"
-        let updateButton = alert.addButton(withTitle: "Ok")
+        alert.messageText = "BingWallpaper is Up to Date"
+        alert.informativeText = "You're running the latest version (\(currentVersion)).\n\nNo update is available at this time."
+        alert.addButton(withTitle: "OK")
         alert.alertStyle = .informational
-        
-        alert.window.defaultButtonCell = updateButton.cell as? NSButtonCell
-        
         alert.runModal()
     }
     

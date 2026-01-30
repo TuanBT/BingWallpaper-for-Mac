@@ -12,11 +12,16 @@ class MenuController: NSObject {
     private static let IMAGE_VIEW_TAG = 6
     private static let TEXT_VIEW_TAG = 7
     private static let REGION_SUBMENU_TAG = 8
+    private static let STATUS_TAG = 9
     private lazy var settingsWc = SettingsWc.instance()
     
     // Current preview region (different from download region in settings)
     private var previewRegion: String?
     private var isLoadingRegionPreview = false
+    
+    // Update status
+    private var nextUpdateTime: Date?
+    private var isUpdating = false
     
     // MARK: - UI setup
     
@@ -59,7 +64,13 @@ class MenuController: NSObject {
         
         menu.addItem(NSMenuItem.separator())
         
-        let refreshItem = NSMenuItem(title: "Refresh Images", action: #selector(refreshImages), keyEquivalent: "")
+        // Status item showing next update time
+        let statusItem = NSMenuItem(title: "", action: nil, keyEquivalent: "")
+        statusItem.tag = MenuController.STATUS_TAG
+        statusItem.isEnabled = false
+        menu.addItem(statusItem)
+        
+        let refreshItem = NSMenuItem(title: "Refresh Now", action: #selector(refreshImages), keyEquivalent: "r")
         refreshItem.target = self
         menu.addItem(refreshItem)
         
@@ -72,15 +83,17 @@ class MenuController: NSObject {
         
         menu.addItem(NSMenuItem.separator())
         
-        let appUpdateItem = NSMenuItem(title: "Check for app update", action: #selector(checkForAppUpdate), keyEquivalent: "")
+        let appUpdateItem = NSMenuItem(title: "Check for App Update", action: #selector(checkForAppUpdate), keyEquivalent: "")
         appUpdateItem.target = self
         menu.addItem(appUpdateItem)
         
-        let settingsItem = NSMenuItem(title: "Settings", action: #selector(showSettingsWc), keyEquivalent: "")
+        let settingsItem = NSMenuItem(title: "Settings...", action: #selector(showSettingsWc), keyEquivalent: ",")
         settingsItem.target = self
         menu.addItem(settingsItem)
         
-        menu.addItem(NSMenuItem(title: "Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
+        menu.addItem(NSMenuItem.separator())
+        
+        menu.addItem(NSMenuItem(title: "Quit Bing Wallpaper", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
         
         return menu
     }
@@ -98,13 +111,13 @@ class MenuController: NSObject {
     
     @MainActor
     @objc func refreshImages(sender: NSMenuItem) {
-        updateManager?.update()
+        updateManager?.forceRefresh()
     }
     
     @MainActor
     @objc func checkForAppUpdate(sender: NSMenuItem) {
         Task {
-            await AppUpdateManager.checkForUpdate()
+            await AppUpdateManager.checkForUpdate(notifyUserAboutNoNewVersion: true)
         }
     }
     
@@ -417,6 +430,25 @@ class MenuController: NSObject {
         let textViewIndex = menu.index(of: imageView) + 1
         menu.insertItem(textItem, at: textViewIndex)
     }
+    
+    @MainActor
+    private func updateStatusItem() {
+        guard let menu = menu, let statusMenuItem = menu.item(withTag: MenuController.STATUS_TAG) else { return }
+        
+        if isUpdating {
+            statusMenuItem.title = "⟳ Updating..."
+        } else if let nextTime = nextUpdateTime {
+            let formatter = DateFormatter()
+            formatter.dateStyle = .none
+            formatter.timeStyle = .short
+            
+            let timeString = formatter.string(from: nextTime)
+            let regionName = MarketRegion.region(for: settings.marketRegion)?.displayName ?? settings.marketRegion
+            statusMenuItem.title = "Next update: \(timeString) • \(regionName)"
+        } else {
+            statusMenuItem.title = "Ready"
+        }
+    }
 }
 
 // MARK: - Delegates
@@ -425,6 +457,12 @@ extension MenuController: UpdateManagerDelegate {
     func downloadedNewImage() {
         showNewestImage()
     }
+    
+    func updateStatusChanged(nextUpdate: Date?, isUpdating: Bool) {
+        self.nextUpdateTime = nextUpdate
+        self.isUpdating = isUpdating
+        updateStatusItem()
+    }
 }
 
 extension MenuController: NSMenuDelegate {
@@ -432,6 +470,7 @@ extension MenuController: NSMenuDelegate {
         // Only update image selector for the main menu, not submenus
         if menu == self.menu {
             updateImageSelectorView(newSelectedDescriptorIndex: selectedDescriptorIndex)
+            updateStatusItem()
         }
         updateRegionMenuTickMarks(menu: menu)
     }

@@ -18,6 +18,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         updateManager.delegate = menuController
         updateManager.start()
         
+        // Restore last selected wallpaper
+        updateManager.restoreLastWallpaper()
+        
         menuController.updateManager = updateManager
         menuController.setup()
         

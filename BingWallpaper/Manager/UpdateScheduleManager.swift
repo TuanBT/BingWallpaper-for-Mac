@@ -9,9 +9,8 @@ import Foundation
 
 public class UpdateScheduleManager {
    
-   private static var settings: Settings {
-       return Settings()
-   }
+   // Cache the settings instance to avoid creating new instance every time
+   private static let settings = Settings()
    
    private static var fetchInterval: Double {
        return settings.updateIntervalHours * 3600
@@ -78,7 +77,8 @@ public class UpdateScheduleManager {
        if alreadyUpdatedTodayAfterSchedule {
            // Already updated today after scheduled time, schedule for tomorrow
            let scheduledTimeTomorrow = calendar.date(byAdding: .day, value: 1, to: scheduledTimeToday) ?? scheduledTimeToday
-           return scheduledTimeTomorrow.timeIntervalSince(now)
+           let interval = scheduledTimeTomorrow.timeIntervalSince(now)
+           return interval
        } else {
            // Scheduled time passed but we haven't updated yet today - UPDATE NOW!
            return 0
