@@ -244,13 +244,19 @@ class UpdateManager {
     
     @MainActor
     @objc func receiveSleepNote(note: NSNotification) {
-        dispatchTimer?.suspend()
+        // Cancel timer when going to sleep instead of suspending
+        // Note: Calling cancel() on a suspended DispatchSourceTimer can crash
+        // So we cancel it here safely while it's still active
+        print("[Sleep] Cancelling timer before sleep")
+        dispatchTimer?.cancel()
+        dispatchTimer = nil
     }
     
     @MainActor
     @objc func receiveWakeNote(note: NSNotification) {
-        dispatchTimer?.cancel()
-        dispatchTimer = nil
+        // Timer was already cancelled in receiveSleepNote
+        // Just schedule a new one
+        print("[Wake] Scheduling new timer after wake")
         doUpdateOrSetTimer()
     }
     
