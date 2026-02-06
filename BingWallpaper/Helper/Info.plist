@@ -4,6 +4,10 @@
 <dict>
 	<key>LSUIElement</key>
 	<true/>
+	<key>NSSupportsAutomaticTermination</key>
+	<false/>
+	<key>NSSupportsSuddenTermination</key>
+	<false/>
 	<key>NSAppleEventsUsageDescription</key>
 	<string>BingWallpaper needs to access System Events to set wallpaper across all spaces and screens.</string>
 </dict>

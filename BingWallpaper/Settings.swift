@@ -40,9 +40,9 @@ public class Settings {
     
     var launchAtLogin: Bool {
         get {
-            // For macOS 13+, check SMAppService status
             if #available(macOS 13.0, *) {
-                let service = SMAppService.loginItem(identifier: Settings.helperBundleId)
+                // Use mainApp for direct registration (more reliable than helper-based approach)
+                let service = SMAppService.mainApp
                 return service.status == .enabled
             } else {
                 return defaults.bool(forKey: Settings.SM_LOGIN_ENABLED)
@@ -50,7 +50,7 @@ public class Settings {
         }
         set {
             if #available(macOS 13.0, *) {
-                let service = SMAppService.loginItem(identifier: Settings.helperBundleId)
+                let service = SMAppService.mainApp
                 do {
                     if newValue {
                         try service.register()

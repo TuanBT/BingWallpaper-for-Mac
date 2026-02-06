@@ -708,7 +708,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="604" height="366"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jLa-xO-k3i">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jLa-xO-k3i">
                                 <rect key="frame" x="129" y="124" width="97" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Image location:" id="NQl-wS-gWX">
                                     <font key="font" metaFont="system"/>
@@ -726,7 +726,7 @@
                                     <action selector="keepImagesSliderAction:" target="use-oq-evN" id="Bif-dr-udv"/>
                                 </connections>
                             </slider>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Nc2-2h-cGg">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Nc2-2h-cGg">
                                 <rect key="frame" x="90" y="84" width="136" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Keep images on disk: " id="7Kf-YJ-H1X">
                                     <font key="font" metaFont="system"/>
@@ -734,7 +734,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XiP-bd-Y91">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XiP-bd-Y91">
                                 <rect key="frame" x="237" y="60" width="10" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="1" id="DLK-Ds-IfV">
                                     <font key="font" metaFont="system"/>
@@ -742,7 +742,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VG3-87-tVb">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VG3-87-tVb">
                                 <rect key="frame" x="288" y="60" width="12" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="2" id="LZM-kE-PlV">
                                     <font key="font" metaFont="system"/>
@@ -750,7 +750,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pwY-eA-MkC">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pwY-eA-MkC">
                                 <rect key="frame" x="437" y="60" width="46" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Infinite" id="yVt-UM-yYc">
                                     <font key="font" metaFont="system"/>
@@ -758,7 +758,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KT3-8h-g8a">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KT3-8h-g8a">
                                 <rect key="frame" x="390" y="60" width="19" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="10" id="Kw7-mN-rKa">
                                     <font key="font" metaFont="system"/>
@@ -766,7 +766,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2AZ-nG-cF5">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2AZ-nG-cF5">
                                 <rect key="frame" x="341" y="60" width="12" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="5" id="fng-Fo-ezz">
                                     <font key="font" metaFont="system"/>
@@ -797,7 +797,7 @@
                                     <action selector="resetDatabaseButtonAction:" target="use-oq-evN" id="1Sb-Gg-GE2"/>
                                 </connections>
                             </button>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="upd-iv-txt">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="upd-iv-txt">
                                 <rect key="frame" x="78" y="210" width="148" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Update interval (hours):" id="upd-iv-cel">
                                     <font key="font" metaFont="system"/>
@@ -805,7 +805,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="upd-iv-fld">
+                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="upd-iv-fld">
                                 <rect key="frame" x="232" y="206" width="80" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="upd-iv-wid"/>
@@ -820,7 +820,7 @@
                                     <action selector="updateIntervalTextFieldAction:" target="use-oq-evN" id="upd-iv-act"/>
                                 </connections>
                             </textField>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="upd-iv-lbl">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="upd-iv-lbl">
                                 <rect key="frame" x="318" y="210" width="197" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Update wallpaper every 3 hours" id="upd-iv-lbl-cel">
                                     <font key="font" metaFont="system"/>
@@ -828,7 +828,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mkt-rgn-txt">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mkt-rgn-txt">
                                 <rect key="frame" x="131" y="254" width="95" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Market Region:" id="mkt-rgn-cel">
                                     <font key="font" metaFont="system"/>
@@ -917,7 +917,7 @@
                                     <action selector="scheduledUpdateCheckBoxAction:" target="use-oq-evN" id="sch-upd-act"/>
                                 </connections>
                             </button>
-                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sch-hr-fld">
+                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sch-hr-fld">
                                 <rect key="frame" x="232" y="164" width="40" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="sch-hr-wid"/>
@@ -932,7 +932,7 @@
                                     <action selector="scheduledHourTextFieldAction:" target="use-oq-evN" id="sch-hr-act"/>
                                 </connections>
                             </textField>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sch-sep-lbl">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sch-sep-lbl">
                                 <rect key="frame" x="275" y="168" width="9" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title=":" id="sch-sep-lbl-cel">
                                     <font key="font" metaFont="systemBold" size="14"/>
@@ -940,7 +940,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sch-min-fld">
+                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sch-min-fld">
                                 <rect key="frame" x="287" y="164" width="40" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="sch-min-wid"/>
@@ -955,7 +955,7 @@
                                     <action selector="scheduledMinuteTextFieldAction:" target="use-oq-evN" id="sch-min-act"/>
                                 </connections>
                             </textField>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sch-time-lbl">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sch-time-lbl">
                                 <rect key="frame" x="333" y="168" width="136" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Update daily at 00:00" id="sch-time-lbl-cel">
                                     <font key="font" metaFont="system"/>

@@ -12,6 +12,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private let menuController = MenuController()
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        // Prevent macOS from automatically terminating this menu bar app
+        // By default, Cocoa apps opt in to automatic/sudden termination,
+        // which causes LSUIElement apps (no visible windows) to be silently killed.
+        ProcessInfo.processInfo.disableAutomaticTermination("BingWallpaper needs to run continuously as a menu bar app")
+        ProcessInfo.processInfo.disableSuddenTermination()
+        
         FileHandler.createWallpaperFolderIfNeeded()
         
         let updateManager = UpdateManager()
