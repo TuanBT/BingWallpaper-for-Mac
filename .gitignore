@@ -122,9 +122,28 @@ BingWallpaper_latest.pkg
 *.pkg
 *.zip
 
+# Built app bundles (should be built locally, not committed)
+BingWallpaper.app/
+BingWallpaperHelper.app/
+
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
+
+# Xcode workspace state & user data
+*.xcuserstate
+xcuserdata/
+*.xcworkspace/xcuserdata/
+
+# Swift Package Manager resolved file
+Package.resolved
+.swiftpm/
+
+# Xcode build data
+ExplicitPrecompiledModules/
+SwiftExplicitPrecompiledModules/
+XCBuildData/
+EagerLinkingTBDs/
