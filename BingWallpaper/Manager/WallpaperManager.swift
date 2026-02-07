@@ -5,15 +5,14 @@ class WallpaperManager {
     private var imageDescriptor: ImageDescriptor?
     static let shared = WallpaperManager()
     private var hasAppleScriptPermission = true // Assume yes, will be set to false if it fails
-    private var lastSetWallpaperPath: String? // Track to avoid redundant sets
     
     private init() {
         setupObserver()
     }
     
     private func setupObserver() {
-        // Only observe space change if we don't have AppleScript permission
-        // This avoids redundant wallpaper sets when AppleScript already handles all spaces
+        // Observe space changes to re-apply wallpaper on the new space
+        // NSWorkspace API only sets the CURRENT space, so we must re-apply each time
         NSWorkspace.shared.notificationCenter.addObserver(
             self,
             selector: #selector(WallpaperManager.activeWorkspaceDidChange),
@@ -39,20 +38,25 @@ class WallpaperManager {
     }
     
     @objc func activeWorkspaceDidChange() {
-        // Only apply wallpaper when switching space if AppleScript failed
-        // (AppleScript already sets all spaces at once)
-        guard !hasAppleScriptPermission else { return }
-        updateWallpaperIfNeeded(forceNSWorkspace: true)
+        // Always re-apply wallpaper when switching spaces
+        // NSWorkspace only sets the current space, so each space switch needs re-application
+        applyWallpaper()
     }
     
     @objc func workspaceDidWake() {
-        // Re-apply wallpaper after wake from sleep
-        updateWallpaperIfNeeded(forceNSWorkspace: false)
+        // Re-apply wallpaper after wake from sleep with a delay
+        // macOS may reset or lose wallpaper state during sleep/wake cycle
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+            self?.applyWallpaper()
+        }
     }
     
     @objc func screensDidChange() {
         // Apply wallpaper when monitors are connected/disconnected
-        updateWallpaperIfNeeded(forceNSWorkspace: false)
+        // Use a delay to allow macOS to finish configuring the new screen layout
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+            self?.applyWallpaper()
+        }
     }
     
     func setWallpaper(descriptor: ImageDescriptor) {
@@ -61,32 +65,28 @@ class WallpaperManager {
         // Save selection to settings for persistence
         Settings().currentWallpaperStartDate = descriptor.startDate
         
-        // Reset last set path to force update
-        lastSetWallpaperPath = nil
-        updateWallpaperIfNeeded(forceNSWorkspace: false)
+        applyWallpaper()
     }
     
-    private func updateWallpaperIfNeeded(forceNSWorkspace: Bool) {
+    /// Core method: applies the current wallpaper using all available methods
+    private func applyWallpaper() {
         guard let descriptor = imageDescriptor else { return }
         let imageUrl = descriptor.image.downloadPath
         
         // Verify file exists
-        guard FileManager.default.fileExists(atPath: imageUrl.path) else { return }
-        
-        // Skip if same wallpaper was just set (avoid redundant operations)
-        if !forceNSWorkspace && lastSetWallpaperPath == imageUrl.path {
+        guard FileManager.default.fileExists(atPath: imageUrl.path) else {
+            print("[Wallpaper] Image file not found at: \(imageUrl.path)")
             return
         }
         
-        // Try AppleScript first to set wallpaper for ALL spaces and screens
-        if !forceNSWorkspace && hasAppleScriptPermission && setWallpaperViaAppleScript(imageUrl: imageUrl) {
-            lastSetWallpaperPath = imageUrl.path
-            return
-        }
-        
-        // Fallback: NSWorkspace API - only sets CURRENT space on each screen
+        // 1. Always use NSWorkspace as primary method (most reliable on modern macOS)
         setWallpaperViaNSWorkspace(imageUrl: imageUrl)
-        lastSetWallpaperPath = imageUrl.path
+        
+        // 2. Additionally try AppleScript for all-spaces support
+        //    This sets wallpaper on spaces that are not currently active
+        if hasAppleScriptPermission {
+            _ = setWallpaperViaAppleScript(imageUrl: imageUrl)
+        }
     }
     
     /// Use AppleScript to set wallpaper for ALL desktops (spaces) and screens
@@ -109,11 +109,13 @@ class WallpaperManager {
             
             if let error = error {
                 let errorNumber = error["NSAppleScriptErrorNumber"] as? Int ?? 0
+                print("[Wallpaper] AppleScript error \(errorNumber): \(error)")
                 
                 // Error -1743: User hasn't granted permission
                 // Error -600: Application not running
                 if errorNumber == -1743 || errorNumber == -600 {
                     hasAppleScriptPermission = false
+                    print("[Wallpaper] AppleScript permission denied, will not try again")
                 }
                 return false
             }
@@ -124,13 +126,31 @@ class WallpaperManager {
         return false
     }
     
-    /// Fallback: Use NSWorkspace API to set wallpaper
-    /// NOTE: This only sets wallpaper for the CURRENT space on each screen
+    /// Use NSWorkspace API to set wallpaper for CURRENT space on each screen
     private func setWallpaperViaNSWorkspace(imageUrl: URL) {
         let workspace = NSWorkspace.shared
         
         for screen in NSScreen.screens {
-            try? workspace.setDesktopImageURL(imageUrl, for: screen, options: [:])
+            do {
+                // Preserve existing wallpaper display options (scaling, fill color, etc.)
+                // so we only change the image, not the user's display preferences
+                var options = workspace.desktopImageOptions(for: screen) ?? [:]
+                
+                // Ensure reasonable defaults if no options exist
+                if options.isEmpty {
+                    options[.imageScaling] = NSImageScaling.scaleProportionallyUpOrDown.rawValue
+                    options[.allowClipping] = true
+                }
+                
+                try workspace.setDesktopImageURL(imageUrl, for: screen, options: options)
+            } catch {
+                print("[Wallpaper] Failed to set wallpaper for screen \(screen.localizedName): \(error)")
+                // Retry with default options as fallback
+                try? workspace.setDesktopImageURL(imageUrl, for: screen, options: [
+                    .imageScaling: NSImageScaling.scaleProportionallyUpOrDown.rawValue,
+                    .allowClipping: true
+                ])
+            }
         }
     }
 }
