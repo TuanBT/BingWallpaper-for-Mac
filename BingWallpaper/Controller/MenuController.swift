@@ -18,6 +18,13 @@ class MenuController: NSObject {
     // Current preview region (different from download region in settings)
     private var previewRegion: String?
     private var isLoadingRegionPreview = false
+    private var previewEntry: DownloadManager.ImageEntry?
+    
+    /// Path for storing the region preview wallpaper image
+    private static let regionPreviewFileName = "_region_preview.jpg"
+    private var regionPreviewFilePath: URL {
+        FileHandler.defaultBingWallpaperDirectory().appendingPathComponent(MenuController.regionPreviewFileName)
+    }
     
     // Update status
     private var nextUpdateTime: Date?
@@ -70,9 +77,9 @@ class MenuController: NSObject {
         statusItem.isEnabled = false
         menu.addItem(statusItem)
         
-        let refreshItem = NSMenuItem(title: "Refresh Now", action: #selector(refreshImages), keyEquivalent: "r")
-        refreshItem.target = self
-        menu.addItem(refreshItem)
+        let updateItem = NSMenuItem(title: "Update Wallpaper Now", action: #selector(updateWallpaperNow), keyEquivalent: "u")
+        updateItem.target = self
+        menu.addItem(updateItem)
         
         // Add "Browse Other Regions" submenu
         let browseRegionsItem = NSMenuItem(title: "Browse Other Regions", action: nil, keyEquivalent: "")
@@ -110,7 +117,7 @@ class MenuController: NSObject {
     }
     
     @MainActor
-    @objc func refreshImages(sender: NSMenuItem) {
+    @objc func updateWallpaperNow(sender: NSMenuItem) {
         updateManager?.forceRefresh()
     }
     
@@ -220,6 +227,7 @@ class MenuController: NSObject {
             .filter { $0.image.isOnDisk() }
         selectedDescriptorIndex = self.descriptors.firstIndex(where: { $0 == self.descriptors.last }) ?? self.descriptors.endIndex
         previewRegion = nil // Reset to default region
+        cleanupRegionPreviewFile() // Clean up any region preview wallpaper
         updateSelectedImage(newSelectedDescriptorIndex: selectedDescriptorIndex)
     }
     
@@ -278,6 +286,9 @@ class MenuController: NSObject {
                 if code == "BACK_TO_MY_REGION" {
                     // Tick "Back to My Region" only if we're not previewing another region
                     item.state = (previewRegion == nil) ? .on : .off
+                    // Dynamically update the label to reflect current settings
+                    let regionName = MarketRegion.region(for: settings.marketRegion)?.displayName ?? settings.marketRegion
+                    item.title = "⬅️ Back to My Region (\(regionName))"
                 } else {
                     item.state = (code == activeRegion) ? .on : .off
                 }
@@ -293,6 +304,7 @@ class MenuController: NSObject {
     @MainActor
     @objc func backToMyRegion(_ sender: NSMenuItem) {
         previewRegion = nil
+        cleanupRegionPreviewFile()
         showNewestImage()
         updateImageSelectorView(newSelectedDescriptorIndex: selectedDescriptorIndex)
     }
@@ -348,16 +360,22 @@ class MenuController: NSObject {
                 return
             }
             
-            // Download the image temporarily (not saving to disk)
+            // Download the image
             let imageUrl = URL(string: "https://www.bing.com" + entry.url)!
             let imageData = try await DownloadManager.downloadBinary(from: imageUrl)
             
             isLoadingRegionPreview = false
             
+            // Store the preview entry
+            self.previewEntry = entry
+            
             // Display the image
             if let image = NSImage(data: imageData) {
                 self.imageSelectorView.imageView.image = image
             }
+            
+            // Save image to disk and set as wallpaper immediately
+            saveAndSetRegionPreviewWallpaper(imageData: imageData)
             
             // Update text view with region info
             self.updateTextViewForRegionPreview(entry: entry, regionCode: regionCode)
@@ -431,6 +449,37 @@ class MenuController: NSObject {
         menu.insertItem(textItem, at: textViewIndex)
     }
     
+    // MARK: - Region Preview Wallpaper Management
+    
+    /// Save the region preview image to disk and set it as wallpaper immediately.
+    /// The wallpaper will persist until the next scheduled update replaces it.
+    private func saveAndSetRegionPreviewWallpaper(imageData: Data) {
+        let filePath = regionPreviewFilePath
+        
+        // Remove old preview file if exists (to allow overwriting)
+        cleanupRegionPreviewFile()
+        
+        do {
+            try imageData.write(to: filePath)
+            print("[Region Preview] Saved preview wallpaper to \(filePath.path)")
+            
+            // Set it as the current wallpaper
+            WallpaperManager.shared.setWallpaper(imageUrl: filePath)
+        } catch {
+            print("[Region Preview] Failed to save preview wallpaper: \(error)")
+        }
+    }
+    
+    /// Remove the region preview file from disk
+    private func cleanupRegionPreviewFile() {
+        let filePath = regionPreviewFilePath
+        if FileManager.default.fileExists(atPath: filePath.path) {
+            try? FileManager.default.removeItem(at: filePath)
+            print("[Region Preview] Cleaned up preview file")
+        }
+        previewEntry = nil
+    }
+    
     @MainActor
     private func updateStatusItem() {
         guard let menu = menu, let statusMenuItem = menu.item(withTag: MenuController.STATUS_TAG) else { return }
@@ -469,7 +518,11 @@ extension MenuController: NSMenuDelegate {
     func menuNeedsUpdate(_ menu: NSMenu) {
         // Only update image selector for the main menu, not submenus
         if menu == self.menu {
-            updateImageSelectorView(newSelectedDescriptorIndex: selectedDescriptorIndex)
+            // Skip overwriting the text/image when previewing another region
+            // (the region preview has its own text and image already set)
+            if previewRegion == nil {
+                updateImageSelectorView(newSelectedDescriptorIndex: selectedDescriptorIndex)
+            }
             updateStatusItem()
         }
         updateRegionMenuTickMarks(menu: menu)

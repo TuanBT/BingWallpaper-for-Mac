@@ -32,7 +32,7 @@ class Database {
         let managedContext = persistentContainer.viewContext
         
         allImageDescriptors()
-            .filter { $0.startDate <= oldestDateStringToKeep }
+            .filter { $0.startDate < oldestDateStringToKeep }
             .forEach { managedContext.delete($0) }
         
         try managedContext.save()

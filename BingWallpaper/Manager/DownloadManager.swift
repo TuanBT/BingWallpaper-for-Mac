@@ -28,7 +28,6 @@ class DownloadManager {
     }
     
     static func downloadImageEntries(numberOfImages: Int, market: String = "en-US") async throws -> [ImageEntry] {
-        // TODO: @2h4u: idx is the start index of the batch of image descriptors that is downloaded, maybe add support for it so more images from the past can be used?
         let response = try await downloadData(from: URL(string: "https://www.bing.com/HPImageArchive.aspx?format=js&n=\(numberOfImages)&idx=0&mkt=\(market)")!)
         return try JSONDecoder().decode(ImageArchive.self, from: response.data).images
     }

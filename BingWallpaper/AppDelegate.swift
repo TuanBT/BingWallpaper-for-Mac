@@ -5,8 +5,6 @@ extension Notification.Name {
     static let killLauncher = Notification.Name("killLauncher")
 }
 
-// TODO: @2h4u create and add icon (app icon and menubar icon)
-
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
     private let menuController = MenuController()
@@ -46,7 +44,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     fileprivate func killBingWallpaperHelperIfNeeded() {
-        let launcherAppId = "com.2h4u.BingWallpaperHelper"
+        let launcherAppId = "com.tuan.BingWallpaperHelper"
         let runningApps = NSWorkspace.shared.runningApplications
         let isRunning = !runningApps.filter { $0.bundleIdentifier == launcherAppId }.isEmpty
         

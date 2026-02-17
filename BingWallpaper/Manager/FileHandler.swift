@@ -67,7 +67,8 @@ class FileHandler {
     
     static func deleteOldImages(oldestDateStringToKeep: String) {
         getSavedImages()
-            .filter { $0.lastPathComponent.replacingOccurrences(of: ".jpg", with: "") <= oldestDateStringToKeep }
+            .filter { !$0.lastPathComponent.hasPrefix("_") } // Skip special files (e.g., _region_preview.jpg)
+            .filter { $0.lastPathComponent.replacingOccurrences(of: ".jpg", with: "") < oldestDateStringToKeep }
             .forEach { removeImageFromDisk(imagePath: $0) }
     }
     

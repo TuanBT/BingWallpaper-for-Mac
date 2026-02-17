@@ -3,6 +3,7 @@ import Foundation
 
 class WallpaperManager {
     private var imageDescriptor: ImageDescriptor?
+    private var directImageUrl: URL?  // For region preview wallpapers (no descriptor)
     static let shared = WallpaperManager()
     private var hasAppleScriptPermission = true // Assume yes, will be set to false if it fails
     
@@ -61,6 +62,7 @@ class WallpaperManager {
     
     func setWallpaper(descriptor: ImageDescriptor) {
         imageDescriptor = descriptor
+        directImageUrl = nil  // Clear any region preview
         
         // Save selection to settings for persistence
         Settings().currentWallpaperStartDate = descriptor.startDate
@@ -68,14 +70,42 @@ class WallpaperManager {
         applyWallpaper()
     }
     
-    /// Core method: applies the current wallpaper using all available methods
-    private func applyWallpaper() {
-        guard let descriptor = imageDescriptor else { return }
-        let imageUrl = descriptor.image.downloadPath
-        
-        // Verify file exists
+    /// Set wallpaper directly from an image file URL (e.g., region preview)
+    /// The wallpaper will persist until the next scheduled update replaces it.
+    func setWallpaper(imageUrl: URL) {
         guard FileManager.default.fileExists(atPath: imageUrl.path) else {
             print("[Wallpaper] Image file not found at: \(imageUrl.path)")
+            return
+        }
+        
+        // Store the direct URL for re-application on space changes
+        directImageUrl = imageUrl
+        imageDescriptor = nil
+        Settings().currentWallpaperStartDate = nil
+        
+        // Apply wallpaper using both methods
+        setWallpaperViaNSWorkspace(imageUrl: imageUrl)
+        if hasAppleScriptPermission {
+            _ = setWallpaperViaAppleScript(imageUrl: imageUrl)
+        }
+    }
+    
+    /// Core method: applies the current wallpaper using all available methods
+    private func applyWallpaper() {
+        let imageUrl: URL
+        
+        if let directUrl = directImageUrl,
+           FileManager.default.fileExists(atPath: directUrl.path) {
+            // Use direct URL (region preview)
+            imageUrl = directUrl
+        } else if let descriptor = imageDescriptor {
+            // Use descriptor-based path
+            imageUrl = descriptor.image.downloadPath
+            guard FileManager.default.fileExists(atPath: imageUrl.path) else {
+                print("[Wallpaper] Image file not found at: \(imageUrl.path)")
+                return
+            }
+        } else {
             return
         }
         

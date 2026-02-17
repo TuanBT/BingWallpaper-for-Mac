@@ -3,7 +3,7 @@ import ServiceManagement
 
 public class Settings {
     private let defaults = UserDefaults.standard
-    private static let helperBundleId = "com.2h4u.BingWallpaperHelper"
+    private static let helperBundleId = "com.tuan.BingWallpaperHelper"
     private static let SETTINGS_VERSION = "SETTINGS_VERSION"
     private static let CURRENT_SETTINGS_VERSION = 2  // Increment when breaking changes occur
     

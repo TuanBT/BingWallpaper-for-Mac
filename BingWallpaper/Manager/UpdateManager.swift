@@ -121,9 +121,6 @@ class UpdateManager {
     
     @MainActor
     private func cleanup() {
-        // TODO: @2h4u: find entries with same startDate and remove them
-        // TODO: @2h4u: probably do this in a migration function in appdelegate
-        
         guard let oldestDateStringToKeep = settings.oldestDateStringToKeep() else { return }
         try? Database.instance.deleteImageDescriptors(olderThan: oldestDateStringToKeep)
         FileHandler.deleteOldImages(oldestDateStringToKeep: oldestDateStringToKeep)
@@ -171,13 +168,23 @@ class UpdateManager {
                 return
             }
             
-            let descriptors = Database.instance.updateImageDescriptors(from: imageEntries)
-            
-            let newDescriptors = descriptors
-                .filter { $0.image.isOnDisk() == false }
+            // On MainActor: save entries to DB, cleanup old ones, determine what to download
+            let descriptorsToDownload: [ImageDescriptor] = await MainActor.run { [weak self] in
+                guard let self = self else { return [] }
+                
+                // Save new entries to DB first
+                _ = Database.instance.updateImageDescriptors(from: imageEntries)
+                
+                // Cleanup old entries and files
+                self.cleanup()
+                
+                // Return descriptors that survived cleanup but aren't on disk yet
+                return Database.instance.allImageDescriptors()
+                    .filter { $0.image.isOnDisk() == false }
+            }
             
             var downloadedCount = 0
-            for descriptor in newDescriptors {
+            for descriptor in descriptorsToDownload {
                 do {
                     try await descriptor.image.downloadAndSaveToDisk()
                     downloadedCount += 1
@@ -189,10 +196,9 @@ class UpdateManager {
             await MainActor.run { [weak self] in
                 guard let self = self else { return }
                 self.isUpdating = false
-                self.cleanup()
                 
                 // Notify delegate about new images (for UI update)
-                if newDescriptors.isEmpty == false {
+                if descriptorsToDownload.isEmpty == false {
                     self.delegate?.downloadedNewImage()
                 }
                 

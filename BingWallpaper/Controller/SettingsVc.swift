@@ -33,8 +33,11 @@ class SettingsVc: NSViewController {
         super.viewDidLoad()
         launchAtLoginCheckBox.state = settings.launchAtLogin ? .on : .off
         hideMenuBarIconCheckBox.state = settings.hideMenuBarIcon ? .on : .off
-        imagePathButton.title = settings.imageDownloadPath.path
+        imagePathButton.title = settings.imageDownloadPath.resolvingSymlinksInPath().path
         imagePathButton.toolTip = imagePathButton.title
+        
+        // Add "View Folder" button next to image path button
+        addViewFolderButton()
         
         // Configure slider for 5 options: 1, 2, 5, 10, ∞
         keepImagesSlider.minValue = 0
@@ -61,6 +64,24 @@ class SettingsVc: NSViewController {
         if let notifCheckBox = showNotificationCheckBox {
             notifCheckBox.state = settings.showUpdateNotification ? .on : .off
         }
+    }
+    
+    /// Programmatically add a "View Folder" button next to the image path button
+    private func addViewFolderButton() {
+        guard let parentView = imagePathButton.superview else { return }
+        
+        let viewFolderButton = NSButton(title: "📂", target: self, action: #selector(viewFolderButtonAction(_:)))
+        viewFolderButton.bezelStyle = .rounded
+        viewFolderButton.toolTip = "Open image folder in Finder"
+        viewFolderButton.translatesAutoresizingMaskIntoConstraints = false
+        parentView.addSubview(viewFolderButton)
+        
+        NSLayoutConstraint.activate([
+            viewFolderButton.leadingAnchor.constraint(equalTo: imagePathButton.trailingAnchor, constant: 4),
+            viewFolderButton.centerYAnchor.constraint(equalTo: imagePathButton.centerYAnchor),
+            viewFolderButton.widthAnchor.constraint(equalToConstant: 36),
+            viewFolderButton.heightAnchor.constraint(equalTo: imagePathButton.heightAnchor)
+        ])
     }
     
     // MARK: - Actions
@@ -90,9 +111,14 @@ class SettingsVc: NSViewController {
         if dialog.runModal() == NSApplication.ModalResponse.OK {
             guard let result = dialog.url else { return }
             settings.imageDownloadPath = result
-            imagePathButton.title = result.path
-            imagePathButton.toolTip = result.path
+            imagePathButton.title = result.resolvingSymlinksInPath().path
+            imagePathButton.toolTip = imagePathButton.title
         }
+    }
+    
+    @objc func viewFolderButtonAction(_ sender: NSButton) {
+        let folderUrl = settings.imageDownloadPath
+        NSWorkspace.shared.open(folderUrl)
     }
     
     @IBAction func keepImagesSliderAction(_ sender: NSSlider) {
@@ -148,7 +174,9 @@ class SettingsVc: NSViewController {
         print("Resetting Database...")
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMdd"  // Use yyyy (calendar year), not YYYY (week year)
-        let oldestDateStringToKeep = dateFormatter.string(from: Date())
+        // Use tomorrow's date to ensure ALL existing entries are deleted (comparison is strictly <)
+        let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date()) ?? Date()
+        let oldestDateStringToKeep = dateFormatter.string(from: tomorrow)
         
         do {
             try Database.instance.deleteImageDescriptors(olderThan: oldestDateStringToKeep)
