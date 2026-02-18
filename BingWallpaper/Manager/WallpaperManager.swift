@@ -39,24 +39,27 @@ class WallpaperManager {
     }
     
     @objc func activeWorkspaceDidChange() {
-        // Always re-apply wallpaper when switching spaces
-        // NSWorkspace only sets the current space, so each space switch needs re-application
-        applyWallpaper()
+        // Re-apply wallpaper when switching spaces using only NSWorkspace (fast path).
+        // AppleScript is intentionally skipped here: it is slow (~100–500 ms) and
+        // causes a noticeable delay / extra re-render on every space transition.
+        // AppleScript is called once when the wallpaper is first set (setWallpaper methods)
+        // to cover all spaces; NSWorkspace is enough to fix the current active space.
+        applyWallpaper(updateAllSpaces: false)
     }
     
     @objc func workspaceDidWake() {
-        // Re-apply wallpaper after wake from sleep with a delay
-        // macOS may reset or lose wallpaper state during sleep/wake cycle
+        // Re-apply wallpaper after wake from sleep with a delay.
+        // Use full update (all spaces) since macOS may have reset wallpapers on all spaces.
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
-            self?.applyWallpaper()
+            self?.applyWallpaper(updateAllSpaces: true)
         }
     }
-    
+
     @objc func screensDidChange() {
-        // Apply wallpaper when monitors are connected/disconnected
-        // Use a delay to allow macOS to finish configuring the new screen layout
+        // Apply wallpaper when monitors are connected/disconnected.
+        // Use full update (all spaces) for the new screen layout.
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
-            self?.applyWallpaper()
+            self?.applyWallpaper(updateAllSpaces: true)
         }
     }
     
@@ -67,7 +70,7 @@ class WallpaperManager {
         // Save selection to settings for persistence
         Settings().currentWallpaperStartDate = descriptor.startDate
         
-        applyWallpaper()
+        applyWallpaper(updateAllSpaces: true)
     }
     
     /// Set wallpaper directly from an image file URL (e.g., region preview)
@@ -83,15 +86,17 @@ class WallpaperManager {
         imageDescriptor = nil
         Settings().currentWallpaperStartDate = nil
         
-        // Apply wallpaper using both methods
-        setWallpaperViaNSWorkspace(imageUrl: imageUrl)
-        if hasAppleScriptPermission {
-            _ = setWallpaperViaAppleScript(imageUrl: imageUrl)
-        }
+        // Apply to all spaces so that switching spaces doesn't flash the old wallpaper
+        applyWallpaper(updateAllSpaces: true)
     }
     
-    /// Core method: applies the current wallpaper using all available methods
-    private func applyWallpaper() {
+    /// Core method: applies the current wallpaper.
+    /// - Parameter updateAllSpaces: When `true`, also invokes AppleScript to update
+    ///   every desktop/space in addition to the current one via NSWorkspace.
+    ///   Pass `false` on hot-path calls (e.g. space-change observer) to avoid the
+    ///   ~100–500 ms AppleScript overhead that would otherwise cause a visible re-render
+    ///   flicker on each space transition.
+    private func applyWallpaper(updateAllSpaces: Bool) {
         let imageUrl: URL
         
         if let directUrl = directImageUrl,
@@ -109,12 +114,15 @@ class WallpaperManager {
             return
         }
         
-        // 1. Always use NSWorkspace as primary method (most reliable on modern macOS)
+        // 1. Always use NSWorkspace as primary method (most reliable on modern macOS).
+        //    This updates only the CURRENT active space.
         setWallpaperViaNSWorkspace(imageUrl: imageUrl)
         
-        // 2. Additionally try AppleScript for all-spaces support
-        //    This sets wallpaper on spaces that are not currently active
-        if hasAppleScriptPermission {
+        // 2. Optionally use AppleScript to set wallpaper on ALL spaces/desktops.
+        //    This is intentionally skipped on space-change events (updateAllSpaces == false)
+        //    because AppleScript is synchronous and slow, which causes a secondary
+        //    flicker/re-render visible to the user on every swipe between desktops.
+        if updateAllSpaces && hasAppleScriptPermission {
             _ = setWallpaperViaAppleScript(imageUrl: imageUrl)
         }
     }
