@@ -1,16 +1,30 @@
 # Bing Wallpaper for Mac
 
-A small macOS menu bar app that downloads the [Bing wallpaper of the day](https://www.microsoft.com/bing/bing-wallpaper) and sets it on every monitor and every Space.
+**Bing Wallpaper for Mac is a free, open-source macOS menu bar app that automatically downloads the Bing image of the day and sets it as your desktop wallpaper — on every monitor and every Space.** It is the Mac equivalent of Microsoft's Bing Wallpaper desktop app, which Microsoft lists for Windows 10 and Windows 11 only ([system requirements](https://www.microsoft.com/en-us/download/details.aspx?id=101202)). If you searched for *bing wallpaper mac*, *bing daily wallpaper macOS*, *auto change wallpaper Mac*, *daily wallpaper changer for Mac*, or *download Bing picture of the day on Mac* — this is that app. It runs in the menu bar with no Dock icon, downloads at 4K (3840×2160), and covers 55 Bing country/market regions.
 
 ![macOS 11+](https://img.shields.io/badge/macOS-11.0%2B-blue)
 ![Swift](https://img.shields.io/badge/Swift-5-orange)
+![Universal](https://img.shields.io/badge/binary-Apple%20Silicon%20%2B%20Intel-lightgrey)
 ![Version](https://img.shields.io/badge/version-1.0.1-green)
 
 <p align="center">
-  <img src="docs/screenshots/menubar.png" alt="BingWallpaper menu bar popover showing today's image, description and quick actions" width="380">
+  <img src="docs/screenshots/menubar.jpg" alt="BingWallpaper menu bar popover showing today's image, description and quick actions" width="380">
   &nbsp;&nbsp;
-  <img src="docs/screenshots/settings.png" alt="BingWallpaper settings window" width="520">
+  <img src="docs/screenshots/settings.jpg" alt="BingWallpaper settings window" width="520">
 </p>
+
+## What it does, in numbers
+
+| | |
+|---|---|
+| Bing market regions | **55** (8 pinned as popular, rest under *All Regions…*) |
+| Wallpaper resolution downloaded | **3840×2160** — the app rewrites Bing's `1920x1080` URL to `UHD` |
+| Network traffic per check | **1** HTTPS GET to `bing.com/HPImageArchive.aspx` (metadata for 8 days), plus the image itself only when it is new |
+| Installed app bundle | **2.5 MB** (universal binary: 1.02 MB, `x86_64` + `arm64`) |
+| Installer download | **1.5 MB** `.pkg` |
+| Minimum macOS | **11.0** (`minos 11.0` in the shipped Mach-O) |
+| Dock icon | none — `LSUIElement` is `true` |
+| Retention options | 1 / 2 / 5 / 10 days, or keep forever |
 
 ## Features
 
@@ -181,10 +195,77 @@ chmod +x ReleaseUtils/build_release.sh
 | Wrong or stale images | Settings → Reset Database, then Update Wallpaper Now |
 | Nothing gets downloaded | Check that the folder in Image location exists and is writable |
 
+## FAQ
+
+### How do I automatically set the Bing image of the day as my wallpaper on macOS?
+
+Install this app, launch it, and that is the whole setup. It fetches Bing's picture of the day and applies it to every monitor and every Space. macOS has no built-in way to do this — the Wallpaper pane in System Settings can rotate a local folder, but it cannot pull Bing's daily image. By default the app re-checks every 3 hours; you can switch to a fixed daily time instead (Settings → *Update at specific time*), and `00:00` lines up with when Bing publishes.
+
+### Is Bing Wallpaper for Mac free? Is there a paid tier or a subscription?
+
+Free, with no paid tier, no subscription, no account, and no in-app purchase. The source is in this repository and you can build it yourself with Xcode.
+
+### What permissions does it need?
+
+One: **Automation → System Events**. macOS asks the first time the app sets a wallpaper. The app uses AppleScript (`tell application "System Events" … tell every desktop`) because that is the way to cover every Space, not just the one you are looking at. If you denied it by accident, re-enable it under **System Settings → Privacy & Security → Automation → BingWallpaper → System Events**.
+
+It does not ask for Full Disk Access, Screen Recording, Accessibility, or Contacts. It writes only to the download folder you choose (default `~/Pictures/bing-wallpapers`) and its own preferences.
+
+### Does it send my data anywhere?
+
+There are exactly two hostnames in the entire Swift source: `www.bing.com` (the image feed) and `github.com` (the "Check for App Update" button). No analytics SDK, no telemetry, no crash reporter, no account. You can verify this yourself:
+
+```bash
+grep -rho 'https://[^"]*' BingWallpaper --include='*.swift' | cut -d/ -f3 | sort -u
+```
+
+### Does it work with multiple monitors, multiple Spaces, and Stage Manager?
+
+Multiple monitors and multiple Spaces: yes — that is what the AppleScript path is for; every desktop on every screen gets the same image. Stage Manager changes how windows are grouped, not what the desktop picture is, so the wallpaper the app sets is the one Stage Manager shows.
+
+### Does it work on Apple Silicon? On Intel? On which macOS versions?
+
+The shipped binary is universal — `lipo -archs` on it reports `x86_64 arm64`, so it runs natively on both Apple Silicon and Intel Macs. The Mach-O declares `minos 11.0`, so macOS 11 Big Sur is the floor. It is built and used day to day on macOS 26.
+
+### Will it fight with my menu bar manager (Bartender, Ice, Hidden Bar, …)?
+
+The app creates a standard `NSStatusItem` ([MenuController.swift](BingWallpaper/Controller/MenuController.swift)), not a custom floating window, so anything that manages ordinary menu bar items treats it like any other icon. If you would rather have no icon at all, Settings → *Hide icon at menubar* removes it and the app keeps updating in the background.
+
+### I already use Microsoft's Bing Wallpaper app — can I just use that on my Mac?
+
+No. Microsoft's official Bing Wallpaper download page lists its supported operating systems as "Windows 10, Windows 11" — macOS is not among them ([Microsoft Download Center](https://www.microsoft.com/en-us/download/details.aspx?id=101202), checked August 2026). This project exists to fill that gap on macOS. Beyond simply running on a Mac, it adds a 55-region picker and per-region browsing, which are described below.
+
+### How is this different from the original 2h4u/BingWallpaper-for-Mac?
+
+This is a fork of [2h4u/BingWallpaper-for-Mac](https://github.com/2h4u/BingWallpaper-for-Mac) and credits it as such. That project's README describes the core behaviour — "automatically downloads the newest bing wallpaper of the day and sets it as wallpaper for all your monitors (and spaces!)" — and does not document region selection, scheduling modes, or retention settings. What this fork adds on top: a 55-region market picker, a **Browse Other Regions** submenu that pulls another country's image of the day without changing your configured region, a fixed-daily-time schedule as an alternative to the interval, retention (1 / 2 / 5 / 10 days or forever), an in-app update check, and a `.pkg` installer.
+
+### Why does macOS say "BingWallpaper is damaged and can't be opened"?
+
+This is the most common install problem, and the app is not damaged. It is not signed with an Apple Developer ID and not notarized, so macOS attaches a `com.apple.quarantine` attribute to the download and Gatekeeper refuses to launch it. Remove the attribute:
+
+```bash
+sudo xattr -cr /Applications/BingWallpaper.app
+open /Applications/BingWallpaper.app
+```
+
+The same command fixes the sibling messages — "can't be opened because Apple cannot check it for malicious software" and "the developer cannot be verified". `xattr -cr` only clears that extended attribute; it does not modify the app.
+
+### Where are the downloaded wallpapers stored, and do they pile up?
+
+Default `~/Pictures/bing-wallpapers`, changeable in Settings. Files are named by date (`20260819.jpg`). At 3840×2160 a Bing JPEG runs roughly 3–4 MB, so "keep forever" costs about 1.1–1.5 GB a year; the retention setting (1 / 2 / 5 / 10 days) deletes older files automatically.
+
+### Can I get a different country's wallpaper without changing my settings?
+
+Yes — menu bar icon → **Browse Other Regions** → pick a country. That region's image of the day is downloaded and applied immediately, and **Back to My Region** returns you to your configured region. Eight regions are pinned for quick access (US, UK, Germany, France, Japan, China, Korea, Vietnam) with the other 47 under *All Regions…*.
+
+### Does it need to be running for the wallpaper to change? What if my Mac was asleep?
+
+Yes, it needs to be running — turn on *Launch at login* in Settings so it starts with your session. If the Mac was asleep or off at the scheduled moment, the update runs when it wakes up rather than being skipped.
+
 ## Credits
 
 Based on [2h4u/BingWallpaper-for-Mac](https://github.com/2h4u/BingWallpaper-for-Mac). Wallpapers come from Microsoft Bing and belong to their respective photographers and copyright holders.
 
 ## License
 
-Open source. See the upstream project for the original terms.
+This repository does not carry a license file yet, and neither does the upstream project — GitHub's license API reports no license for [2h4u/BingWallpaper-for-Mac](https://github.com/2h4u/BingWallpaper-for-Mac). The source is public to read and build, but without an explicit license the default copyright terms apply. If you want to redistribute or reuse the code, open an issue and ask.
